@@ -14,13 +14,15 @@ export default {
 
   path: '/',
 
-  // Keep in mind, routes are evaluated in order
+  // Routes are evaluated in order
   children: [
     require('./home').default,
-    require('./contact').default,
+    require('./team').default,
+    require('./about').default,
+    require('./events').default,
+    require('./programs').default,
     require('./login').default,
     require('./register').default,
-    require('./about').default,
     require('./privacy').default,
     require('./admin').default,
 
@@ -31,9 +33,11 @@ export default {
   async action({ next }) {
     // Execute each child route until one of them return the result
     const route = await next();
+    const defaultTitle = 'A Page ...';
+    const defaultDesc = 'Some descriptive words ...';
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.reactstarterkit.com`;
+    route.title = `${route.title || 'A Page'}`;
     route.description = route.description || '';
 
     return route;

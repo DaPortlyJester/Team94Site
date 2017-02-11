@@ -7,7 +7,9 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { PropTypes } from 'react';
+import React, {PropTypes, Component} from 'react';
+import {render} from 'react-dom';
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 
@@ -20,22 +22,52 @@ class Home extends React.Component {
     })).isRequired,
   };
 
+  handleSelect(index, last) {
+    console.log('Selected tab: ' + index + ', Last tab' + last);
+  }
+
   render() {
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <h1>React.js News</h1>
-          <ul className={s.news}>
-            {this.props.news.map((item, index) => (
-              <li key={index} className={s.newsItem}>
-                <a href={item.link} className={s.newsTitle}>{item.title}</a>
-                <span
-                  className={s.newsDesc}
-                  dangerouslySetInnerHTML={{ __html: item.contentSnippet }}
-                />
-              </li>
-            ))}
-          </ul>
+          <Tabs onSelect={this.handleSelect}  selectedIndex={2}>
+            <TabList>
+              <Tab>Youth</Tab>
+              <Tab>STEM</Tab>
+              <Tab>Community</Tab>
+              <Tab>FIRST</Tab>
+              <Tab>News</Tab>
+            </TabList>
+
+            <TabPanel>
+              <h1>Youth</h1>
+            </TabPanel>
+            <TabPanel>
+              <h1>STEM</h1>
+            </TabPanel>
+            <TabPanel>
+              <h1>Community</h1>
+            </TabPanel>
+            <TabPanel>
+              <h1>FIRST</h1>
+            </TabPanel>
+            <TabPanel>
+              <h1>React.js News</h1>
+              <ul className={s.news}>
+                {this.props.news.map((item, index) => (
+                  <li key={index} className={s.newsItem}>
+                    <a href={item.link} className={s.newsTitle}>{item.title}</a>
+                    <span
+                      className={s.newsDesc}
+                      dangerouslySetInnerHTML={{ __html: item.contentSnippet }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </TabPanel>
+          </Tabs>
+
+
         </div>
       </div>
     );
