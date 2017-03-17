@@ -7,22 +7,27 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+import 'rc-tabs/assets/index.css';
 import React, {PropTypes, Component} from 'react';
 import {render} from 'react-dom';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import Tabs, {TabPane} from 'rc-tabs';
+import TabContent from '../src/SwipeableTabContent';
+import ScrollableInkTabBar from '../src/ScrollableInkTabBar';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 
 class Home extends React.Component {
-  static propTypes = {
-    news: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      contentSnippet: PropTypes.string,
-    })).isRequired,
-  };
+  static propTypes = {};
 
-  handleSelect(index, last) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeKey: "1",
+      key: "1"
+    }
+  }
+
+  onChange(key) {
     console.log('Selected tab: ' + index + ', Last tab' + last);
   }
 
@@ -30,41 +35,9 @@ class Home extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <Tabs onSelect={this.handleSelect}  selectedIndex={2}>
-            <TabList>
-              <Tab>Youth</Tab>
-              <Tab>STEM</Tab>
-              <Tab>Community</Tab>
-              <Tab>FIRST</Tab>
-              <Tab>News</Tab>
-            </TabList>
+          <Tabs
+          >
 
-            <TabPanel>
-              <h1>Youth</h1>
-            </TabPanel>
-            <TabPanel>
-              <h1>STEM</h1>
-            </TabPanel>
-            <TabPanel>
-              <h1>Community</h1>
-            </TabPanel>
-            <TabPanel>
-              <h1>FIRST</h1>
-            </TabPanel>
-            <TabPanel>
-              <h1>React.js News</h1>
-              <ul className={s.news}>
-                {this.props.news.map((item, index) => (
-                  <li key={index} className={s.newsItem}>
-                    <a href={item.link} className={s.newsTitle}>{item.title}</a>
-                    <span
-                      className={s.newsDesc}
-                      dangerouslySetInnerHTML={{ __html: item.contentSnippet }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </TabPanel>
           </Tabs>
 
 
@@ -74,4 +47,4 @@ class Home extends React.Component {
   }
 }
 
-export default withStyles(s)(Home);
+export default Home;
